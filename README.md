@@ -37,11 +37,11 @@ By completing this task, you will learn:
 
 ### If the task in the main branch is hard for you, then switch to the `with-detailed-description` branch
 
-OpenAI Documentation: https://platform.openai.com/docs/guides/embeddings
-Langchain OpenAI Embeddings Documentation: https://python.langchain.com/docs/integrations/text_embedding/openai/
-Langchain OpenAI Chat Documentation: https://python.langchain.com/docs/integrations/chat/openai/
-Langchain FAISS Documentation: https://python.langchain.com/docs/integrations/vectorstores/faiss/
-Langchain RecursiveCharacterTextSplitter Documentation: https://python.langchain.com/docs/how_to/recursive_text_splitter/
+- OpenAI Documentation: https://platform.openai.com/docs/guides/embeddings
+- Langchain OpenAI Embeddings Documentation: https://python.langchain.com/docs/integrations/text_embedding/openai/
+- Langchain OpenAI Chat Documentation: https://python.langchain.com/docs/integrations/chat/openai/
+- Langchain FAISS Documentation: https://python.langchain.com/docs/integrations/vectorstores/faiss/
+- Langchain RecursiveCharacterTextSplitter Documentation: https://python.langchain.com/docs/how_to/recursive_text_splitter/
 
 Complete the implementation in `app.py` by filling in all the TODO sections:
 
