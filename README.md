@@ -135,12 +135,8 @@ What is the recommended procedure for removing odors from the microwave oven?
 
 ### Invalid request samples:
 ```
-What do you know about the DIALX community?
+What do you know about the Codeus community?
 ```
 ```
 What do you think about the dinosaur era? Why did they die?
 ```
-
-----
-
-# <img src="dialx-banner.png">
