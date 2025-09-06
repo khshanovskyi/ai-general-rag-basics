@@ -7,6 +7,12 @@ from langchain_core.vectorstores import VectorStore
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from pydantic import SecretStr
 
+# - OpenAI Documentation: https://platform.openai.com/docs/guides/embeddings
+# - Langchain OpenAI Embeddings Documentation: https://python.langchain.com/docs/integrations/text_embedding/openai/
+# - Langchain OpenAI Chat Documentation: https://python.langchain.com/docs/integrations/chat/openai/
+# - Langchain FAISS Documentation: https://python.langchain.com/docs/integrations/vectorstores/faiss/
+# - Langchain RecursiveCharacterTextSplitter Documentation: https://python.langchain.com/docs/how_to/recursive_text_splitter/
+
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 SYSTEM_PROMPT = """You are a RAG-powered assistant that assists users with their questions about microwave usage.
