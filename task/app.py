@@ -40,42 +40,42 @@ class MicrowaveRAG:
     def _setup_vectorstore(self) -> VectorStore:
         """Initialize the RAG system"""
         print("🔄 Initializing Microwave Manual RAG System...")
-
-        if os.path.exists('microwave_faiss_index'):
-            vectorstore = FAISS.load_local(
-                folder_path='microwave_faiss_index',
-                embeddings=self.embeddings,
-                allow_dangerous_deserialization=True,
-            )
-            print("✅ Loaded existing FAISS index")
-        else:
-            vectorstore = self._create_new_index()
-            print("✅ RAG system initialized successfully!")
-
-        return vectorstore
+        # TODO:
+        #  Check if `microwave_faiss_index` folder exists (os.path.exists("{folder_name}"))
+        #  - Exists:
+        #       It means that we have already converted data into vectors (embeddings), saved them in FAISS vector
+        #       store and saved it locally to reuse it later.
+        #       - Load FAISS vectorstore from local index (FAISS.load_local(...))
+        #       - Configure folder_path `microwave_faiss_index`
+        #       - Configure embeddings `self.embeddings`
+        #       - Configure allow_dangerous_deserialization `True` (for our case it is ok, but don't do it on PROD)
+        #       - Make variable assignment to `vectorstore`
+        #  - Otherwise:
+        #       - Make variable assignment of `self._create_new_index()` to `vectorstore`
+        #  Return `vectorstore`
+        return None
 
     def _create_new_index(self) -> VectorStore:
         print("📖 Loading text document...")
-        loader = TextLoader('microwave_manual.txt', encoding='utf-8')
-        documents = loader.load()
+        # TODO:
+        #  1. Create langchain_community.document_loaders.TextLoader:
+        #       - file_path is `microwave_manual.txt`
+        #       - encoding is `utf-8`
+        #       - assign it to `loader` variable
+        #  2. Load documents via `loader.load()` and assign to `documents` variable
+        #  3. Create RecursiveCharacterTextSplitter with
+        #       - chunk_size=300
+        #       - chunk_overlap=50
+        #       - separators=["\n\n", "\n", "."]
+        #  4. Split `documents` via created `text_splitter` into `chunks`
+        #  5. Create `vectorstore` via FAISS.from_documents:
+        #       - documents=chunks
+        #       - embeddings=self.embeddings
+        #  6. Save indexed data locally `vectorstore.save_local("microwave_faiss_index")`
+        #  7. Return created `vectorstore`
+        return None
 
-        print("✂️ Splitting document into chunks...")
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=300,
-            chunk_overlap=50,
-            separators=["\n\n", "\n", "."]
-        )
-        chunks = text_splitter.split_documents(documents)
-        print(f"✅ Created {len(chunks)} chunks")
-
-        print("🔍 Creating embeddings and FAISS index...")
-        vectorstore = FAISS.from_documents(chunks, self.embeddings)
-        vectorstore.save_local("microwave_faiss_index")
-        print("💾 Index saved for future use")
-
-        return vectorstore
-
-    def retrieve_context(self, query: str, k: int = 4, score=0.3):
+    def retrieve_context(self, query: str, k: int = 4, score=0.3) -> str:
         """
         Retrieve the context for a given query.
         Args:
@@ -87,41 +87,42 @@ class MicrowaveRAG:
         print(f"Query: '{query}'")
         print(f"Searching for top {k} most relevant chunks with similarity score {score}:")
 
-        relevant_docs = self.vectorstore.similarity_search_with_relevance_scores(
-            query,
-            k=k,
-            score_threshold=score
-        )
+        # TODO:
+        #  Make `similarity_search_with_relevance_scores` in `vectorstore`:
+        #       - query=query
+        #       - k=k
+        #       - score_threshold=score
+        #       - assign results to `relevant_docs` variable
 
         context_parts = []
-        for (doc, score) in relevant_docs:
-            context_parts.append(doc.page_content)
-            print(f"\n--- (Relevance Score: {score:.3f}) ---")
-            print(f"Content: {doc.page_content}")
+        # TODO:
+        #  Iterate through results (`for (doc, score) in relevant_docs`) and:
+        #       - add `doc.page_content` to `context_parts` array
+        #       - print `score`
+        #       - print `page_content`
 
         print("=" * 100)
-        return "\n\n".join(context_parts)
+        return "\n\n".join(context_parts) # will join all chunks ion one string with `\n\n` separator between chunks
 
-    def augment_prompt(self, query: str, context: str):
+    def augment_prompt(self, query: str, context: str) -> str:
         print(f"\n🔗 STEP 2: AUGMENTATION\n{'-' * 100}")
 
-        augmented_prompt = USER_PROMPT.format(context=context, query=query)
+        augmented_prompt = None #TODO: Assign USER_PROMPT with format for `context` and `query` parameters to the `augmented_prompt`
 
         print(f"{augmented_prompt}\n{'=' * 100}")
         return augmented_prompt
 
-    def generate_answer(self, augmented_prompt: str):
+    def generate_answer(self, augmented_prompt: str) -> str:
         print(f"\n🤖 STEP 3: GENERATION\n{'-' * 100}")
 
-        messages = [
-            SystemMessage(content=SYSTEM_PROMPT),
-            HumanMessage(content=augmented_prompt)
-        ]
-
-        response = self.llm_client.invoke(messages)
-
-        print(f"{response.content}\n{'=' * 100}")
-        return response.content
+        # TODO:
+        #  1. Create `messages` array with such messages:
+        #       - SystemMessage(content=SYSTEM_PROMPT)
+        #       - HumanMessage(content=augmented_prompt)
+        #  2. Call self.llm_client.invoke(messages) and assign result to `response` variable
+        #  3. print(f"{response.content}\n{'=' * 100}")
+        #  4. Return response content
+        return None
 
 
 def main(rag: MicrowaveRAG):
@@ -139,14 +140,15 @@ def main(rag: MicrowaveRAG):
 
 main(
     MicrowaveRAG(
-        embeddings=OpenAIEmbeddings(
-            model='text-embedding-3-small',
-            api_key=SecretStr(OPENAI_API_KEY),
-        ),
-        llm_client=ChatOpenAI(
-            temperature=0.0,
-            model='gpt-4o',
-            api_key=SecretStr(OPENAI_API_KEY),
-        )
+        # TODO:
+        #  1. pass embeddings:
+        #       OpenAIEmbeddings
+        #       - model='text-embedding-3-small'
+        #       - api_key=SecretStr(OPENAI_API_KEY)
+        #  2. pass llm_client:
+        #       ChatOpenAI
+        #       - temperature=0.0
+        #       - model='gpt-4o'
+        #       - api_key=SecretStr(OPENAI_API_KEY)
     )
 )
