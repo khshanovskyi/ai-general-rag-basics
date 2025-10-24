@@ -103,7 +103,7 @@ class MicrowaveRAG:
         #       - print page content
 
         print("=" * 100)
-        return "\n\n".join(context_parts) # will join all chunks ion one string with `\n\n` separator between chunks
+        return "\n\n".join(context_parts) # will join all chunks in one string with `\n\n` separator between chunks
 
     def augment_prompt(self, query: str, context: str) -> str:
         print(f"\n🔗 STEP 2: AUGMENTATION\n{'-' * 100}")
